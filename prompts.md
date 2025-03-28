@@ -7,6 +7,6 @@ Il y a plusieurs types d'anaphores co-référentielles :
 3. Anaphore pronominale : Pronom personnel (il) ou pronoms démonstratifs (celui-ci/là)
 4. Anaphore infidèle : Co-référer à un antécédent en variant la dénomination, la tête nominale du GN de reprise est différente
 Affiche la phrase en entier puis affiche l'expression référentielle de cette manière :
-1. L'antécédant
-2. La co-référence
+A. L'antécédant
+B. La co-référence
 Quand il y a une anaphore co-référentielle, précise le type parmi les quatre ci-dessus et affiche-le entre parenthèses.
