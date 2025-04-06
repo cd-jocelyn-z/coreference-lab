@@ -1,24 +1,40 @@
 import ollama
+import json
 
-text = """
-Ainsi, la discrimination positive, lorsqu’elle est appliquée consiste, à favoriser des mesures visant à promouvoir : l’égalité des chances, l'accès à l'éducation, à l'emploi, à la formation (la politique d’égalité des chances mise en place par les institutions Science Po pour les étudiants issues des minorités) ou encore l'octroi de bourses sur critère sociaux mise en place par le Crous ; en vue de créer des conditions plus équitables, pour réduire les disparités économiques, encourager la diversité culturelle, à travers la création de modèles positifs, pouvant offrir aux groupes défavorisés des opportunités qui leur ont souvent été refusées dans le passé.
-En Afrique du Sud ; elle a permis la représentation équitable de chaque groupe racial dans la vie sociale, économique et politique.
-"""
+with open("data.json") as data_file:
+    docs = json.load(data_file)
+with open("prompts.json") as prompt_file:
+    prompts = json.load(prompt_file)
 
-prompt = f"""Tu es un expert dans la langue française. Identifie les expressions qui font référence à la même entité dans ce texte. 
-Pour chaque groupe de co-références, indique :
-1. L'antécédent.
-2. Les co-références.
+models = ["mistral:7b-instruct","llama3.2:latest" ]
+results = []
 
-Texte :
-{text}
+for model_name in models: 
 
-Qui suivent la forme :
-[antecedant] : [co-référence 1, co-référence 2, ...]
-"""
+    for prompt_obj in prompts:
+        prompt_id = prompt_obj["id"]
+        prompt_text = prompt_obj["prompt"]
 
-response = ollama.chat(model="mistral:7b-instruct", messages=[
-    {"role": "user", "content": prompt}
-])
+        for idx, doc in enumerate(docs[:2]):
+            text = doc['text']
+            full_prompt = prompt_text + "\n\n" + text
+            print(f"Analysis: Prompt {prompt_id}, Text {idx}")
 
-print(response['message']['content'])
+            response = ollama.chat(
+                model=model_name,
+                messages=[{"role": "user", "content": full_prompt}]
+            )
+
+            annotated = response['message']['content']
+
+            results.append({
+                "prompt_id": prompt_id,
+                "prompt": prompt_text,
+                "source_id": f"text_{idx:03}",
+                "text": text,
+                "model": model_name,
+                "result": annotated
+            })
+
+with open("coref_annotations_.json", "w", encoding="utf-8") as f:
+    json.dump(results, f, ensure_ascii=False, indent=2)
