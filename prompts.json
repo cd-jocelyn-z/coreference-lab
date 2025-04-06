@@ -1,0 +1,16 @@
+[
+  {
+  "id": 1,  
+  "prompt": 
+      "List the coreferences in this text."
+    
+  },
+
+  {
+    "id": 2,  
+    "prompt": 
+       "List the coreferences in this text. Return the antecedent and the coreference. Enumerate the coreferences."
+  }
+  
+]
+  
