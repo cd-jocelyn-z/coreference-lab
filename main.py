@@ -36,5 +36,5 @@ for model_name in models:
                 "result": annotated
             })
 
-with open("coref_annotations_.json", "w", encoding="utf-8") as f:
+with open("coref_annotations.json", "w", encoding="utf-8") as f:
     json.dump(results, f, ensure_ascii=False, indent=2)
