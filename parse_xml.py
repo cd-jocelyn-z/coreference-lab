@@ -1,20 +1,25 @@
 import xml.etree.ElementTree as ET
-import json
+from corpus_utils import save_json
+from datastructures import Corpus, Doc
+from pathlib import Path
 
-tree = ET.parse("data.xml")
-corpus = tree.getroot()
+def parse_xml(path: Path) -> Corpus:
+    tree = ET.parse(path)
+    corpus = tree.getroot()
 
+    docs = []
+    for doc_elem in corpus:
+        if doc_elem.text and doc_elem.text.strip():
+            doc = Doc(
+                classe=doc_elem.attrib.get("class", ""),
+                niveau=doc_elem.attrib.get("niveau", ""),
+                source=doc_elem.attrib.get("source", ""),
+                text=" ".join(line.strip() for line in doc_elem.text.splitlines()),
+                corefs=[]
+            )
+            docs.append(doc)
 
-docs = []
-for doc in corpus:
-    if doc.text and doc.text.strip():
-        docs.append({
-            "class": doc.attrib.get("class"),
-            "niveau": doc.attrib.get("niveau"),
-            "source": doc.attrib.get("source"),
-            "text": " ".join(line for line in doc.text.splitlines())
-        })
+    return Corpus(docs=docs)
 
-
-with open('data.json', 'w', encoding='utf-8') as f:
-    json.dump(docs, f, ensure_ascii=False, indent=2)
+corpus = parse_xml(Path("data/data.xml"))
+save_json(corpus, Path("data/data.json"))
