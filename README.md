@@ -1,47 +1,42 @@
-# Tester les LLMs
-## Un petit guide pour lancer les annotations à partir des fichiers disponibles
+### Outil de coréférence utilisant des LLMs
 
-> **Note :** Les prompts simples sont conçus pour tester comment combiner les textes à annoter, les LLMs utilisés pour l’annotation, et la gestion des fichiers.  
-Cela permet d’accéder facilement aux informations nécessaires pour comparer les sorties générées par différents modèles.
+Ce projet vise à enrichir des données textuelles avec une analyse de coréférence.
+La stratégie de *zero-shot prompting* a été utilisée afin de comprendre le comportement de deux modèles open source.
 
-L’intégration de **Langfuse** sera introduite prochainement.
+Les modèles **Gemma 3:4b** et **DeepSeek-R1:14b** ont été testés pour cette tâche.
 
-### Les scripts :
+[![Screenshot-2025-05-15-at-00-05-24.png](https://i.postimg.cc/V6XHLV7M/Screenshot-2025-05-15-at-00-05-24.png)](https://postimg.cc/mz2Sm8W2)
 
-- **parse_xml.py** : Ce script permet d’extraire des informations à partir d’un fichier XML contenant les données, puis de les mettre au format JSON.
+---
 
-- **prompts.json** :  
-  - Chaque élément possède un champ `"id"` et un champ `"prompt"`.  
-  - La sortie est enregistrée dans `data.json`.
+**Scripts principaux :**
 
-- **main.py** : Ce script permet de lancer l’annotation effectuée par les modèles.  
-  Actuellement, seuls les modèles suivants sont utilisés :
-  1. mistral-7b-instruct  
-  2. llama3.2  
+- `parse_xml.py`
+- `run_llm_lab.py`
+- `run_llm_annotator.py`
 
+Le flux de traitement est le suivant :
+`data.xml` → `data.json` → `data_enriched-deepseek.json` / `data_enriched-gemma.json`
 
-Lors de l’exécution de `main.py`, le script lit l’`id` et le `prompt` disponibles dans `prompts.json`, ainsi que le `source_id` et le `text` provenant du fichier `data.json`.  
-Il est conçu pour permettre de filtrer et sauvegarder ces informations au format JSON, afin de pouvoir ensuite les convertir en fichier CSV. Cela permet par exemple :
-1. d’identifier quel prompt a été utilisé pour un texte donné avec un modèle donné,  
-2. de voir quels résultats un modèle a produits pour un texte spécifique, etc.
+---
 
-### Résultat :
-Lien pour accéder au dépôt des résultats : [*llm annotations*](https://drive.google.com/drive/folders/1iOgjbJre12ZkowCvpwESD0PqgGQCzF0q?usp=drive_link)
+1. **Sortie non structurée** : le comportement du modèle face à une sortie libre.
+   Liens vers les sorties :
 
-Un exemple du contenu du fichier `coref_annotations.json` :
+   - DeepSeek : [Drive](https://drive.google.com/drive/folders/16OVy3AKgNdiCduqr_eUobk_FhoomeMgz?usp=sharing)
+   - Gemma : [Drive](https://drive.google.com/drive/folders/1bYt4hNPmkHsZ79XEdO4L19HR7HrJNUSd?usp=sharing)
 
+2. **Sortie semi-structurée** : on analyse la capacité du modèle à comprendre une structure partiellement définie.
+   Liens vers les sorties :
 
-```python
-[
-    {
-    "prompt_id": 1,
-    "prompt": "List the coreferences in this text.",
-    "source_id": "text_000",
-    "text": " La discrimination positive est-elle nécessaire pour réduire les inégalités ?...",
-    "model": "mistral:7b-instruct",
-    "result": "1. \"Il\" refers to the cannabis plant in the first sentence.\n2. \"Lui\" (the latter) also refers to the cannabis in the sixth sentence.\n3...
-    }
+   - DeepSeek : [Drive](https://drive.google.com/drive/folders/16r4J5tDH8X2oj3fdvYc7ZR9Bx3ylV9n7?usp=sharing)
+   - Gemma : [Drive](https://drive.google.com/drive/folders/19sjHiPG9Sws-qfV8IrhWa1JGSwu_E6U5?usp=sharing)
 
-]
-```
+3. **Sortie structurée** : on applique le prompt ayant généré la structure la plus pertinente. Cette structure est ensuite ajoutée dans un champ `corefs`, destiné à stocker l’analyse produite par le LLM.
+   Liens vers les sorties :
 
+   - DeepSeek : [Drive](https://drive.google.com/drive/folders/1P-x7Xj3OPt0d6CFoGuGISz_hmclV4Rrg?usp=sharing)
+   - Gemma : [Drive](https://drive.google.com/drive/folders/1otDT6AtdFPi2ICboqfVW8Oq1Lh0JsM64?usp=sharing)
+
+Cette implémentation expérimentale illustre comment les LLMs peuvent être utilisés comme outil d’enrichissement du corpus.
+Bien que certaines sorties présentent encore des imprécisions, le projet ouvre la voie à de nombreuses améliorations possibles, notamment en matière de sélection de modèles, d’optimisation des prompts et de post-traitement des résultats.
