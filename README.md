@@ -65,20 +65,34 @@ Cette implémentation expérimentale illustre comment les LLMs peuvent être uti
 Bien que certaines sorties présentent encore des imprécisions, le projet ouvre la voie à de nombreuses améliorations possibles, notamment en matière de sélection de modèles, d’optimisation des prompts et de post-traitement des résultats.
 
 ## Informations sur les branches
+## Branches disponibles
 
-### Branche coreferee-spacy
+Ce dépôt est structuré en plusieurs branches thématiques :
 
-- Cette branche est 6 commits en avance et 25 commits en retard par rapport à main.
+- **`coreferee-spacy`**  
+  - Contient tous les scripts de conversion et d’évaluation basés sur spaCy + Coreferee.  
+  - Statut : scripts stables pour la conversion (XML/texte → CoNLL-2012) et l’évaluation (`evaluate.py`, `evaluate_all_metrics.py`).
 
-- Contient les scripts expérimentaux pour spaCy + Coreferee et la conversion CoNLL.
+- **`corefud`**  
+  - Regroupe nos tentatives d’intégration de **CorefUD** pour la coréférence UD/CoNLL-U.  
+  - Statut : installation non aboutie (dépendances obsolètes), mais lien vers le **CorefUD Scorer** :  
+    https://github.com/ufal/corefud-scorer
 
-### Branche corefud
+- **`docsdev`**  
+  - Documentation et guides d’annotation manuelle (outil Decofre).  
+  - Fichiers clés :  
+    - `Coreference-Annotation-Setup.md` (guide d’installation/config)  
+    - `README.md` (présentation de la branche)
 
-- Cette branche est 3 commits en avance et 25 commits en retard par rapport à main.
+- **`prompts`**  
+  - Expérimentations de prompts pour LLMs (coref, reformulation, etc.).  
+  - Fichiers :  
+    - `prompts.md` (documentation des prompts et retours)  
+    - `prompts.txt` (collecte de formulations brutes)  
+    - `mistral.py` (script d’envoi de prompts)
 
-- CorefUD : l’outil n’a pas pu être installé en raison de dépendances obsolètes (Python 2.x, scikit-learn anciennes).
+Chaque branche est conçue pour isoler un aspect du projet : conversion & scoring (coreferee-spacy), evaluation UD (corefud), documentation (docsdev) et tests de prompts (prompts).  
 
-Un utilitaire d’évaluation CorefUD Scorer était néanmoins intéressant pour une évaluation « clé‑libre » : https://github.com/ufal/corefud-scorer
 
 ## Auteurs
 
