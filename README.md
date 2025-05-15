@@ -64,15 +64,15 @@ Le flux de traitement est le suivant :
 Cette implémentation expérimentale illustre comment les LLMs peuvent être utilisés comme outil d’enrichissement du corpus.
 Bien que certaines sorties présentent encore des imprécisions, le projet ouvre la voie à de nombreuses améliorations possibles, notamment en matière de sélection de modèles, d’optimisation des prompts et de post-traitement des résultats.
 
-# Informations sur les branches
+## Informations sur les branches
 
-## Branche coreferee-spacy
+### Branche coreferee-spacy
 
 - Cette branche est 6 commits en avance et 25 commits en retard par rapport à main.
 
 - Contient les scripts expérimentaux pour spaCy + Coreferee et la conversion CoNLL.
 
-## Branche corefud
+### Branche corefud
 
 - Cette branche est 3 commits en avance et 25 commits en retard par rapport à main.
 
@@ -80,7 +80,7 @@ Bien que certaines sorties présentent encore des imprécisions, le projet ouvre
 
 Un utilitaire d’évaluation CorefUD Scorer était néanmoins intéressant pour une évaluation « clé‑libre » : https://github.com/ufal/corefud-scorer
 
-# Auteurs
+## Auteurs
 
 - Jeanne Costantini
 
@@ -90,7 +90,7 @@ Un utilitaire d’évaluation CorefUD Scorer était néanmoins intéressant pour
 
 - Lina Sabir
 
-# Remerciements
+## Remerciements
 
 - Sur la base des données et du projet initial de Vanessa Gaudray Bouju.
 
