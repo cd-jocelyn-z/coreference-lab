@@ -79,3 +79,19 @@ Bien que certaines sorties présentent encore des imprécisions, le projet ouvre
 - CorefUD : l’outil n’a pas pu être installé en raison de dépendances obsolètes (Python 2.x, scikit-learn anciennes).
 
 Un utilitaire d’évaluation CorefUD Scorer était néanmoins intéressant pour une évaluation « clé‑libre » : https://github.com/ufal/corefud-scorer
+
+# Auteurs
+
+- Jeanne Costantini
+
+- Jourdan Wilson
+
+- Jocelyn Zaruma
+
+- Lina Sabir
+
+# Remerciements
+
+- Sur la base des données et du projet initial de Vanessa Gaudray Bouju.
+
+- Encadrement : Prof. Iris Taravella.
